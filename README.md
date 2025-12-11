@@ -1,6 +1,7 @@
 The Bluetooth Messaging System
 
--Split it in 3 different Parts that Each Memeber Implemented
+Split it in 3 different Parts that Each Memeber Implemented
+
 
 -Bluetooh Implemented By Edvin Rastoder
 
