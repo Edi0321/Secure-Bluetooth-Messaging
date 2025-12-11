@@ -1,0 +1,3 @@
+ble_adapter_url: "http://localhost:8000/v1/ble/send_chunk"
+ble_device_fp: "DEV-BLE-ADAPTER"
+ble_device_token: "dev-ble-token"
