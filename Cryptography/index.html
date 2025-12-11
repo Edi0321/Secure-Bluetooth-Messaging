@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Blue Messaging</title>
+    <style>
+        html,
+        head,
+        body {
+            margin: 0;
+            height: 100%;
+            background-color: darkgray;
+        }
+
+        #textbox-overlay {
+            position: fixed;
+            left: 5%;
+            right: 5%;
+            bottom: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-family: monospace;
+            padding: 1em;
+            border-radius: 1em;
+            border: 2px solid red;
+            resize: vertical;
+        }
+
+        #my-message, #received-message {
+            position: relative;
+            width: 30%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            font-family: monospace;
+            padding: 1em;
+            border-radius: 1em;
+            word-wrap: break-word;
+        }
+
+        #my-message {
+            left: 66%;
+            border: 2px solid red;
+        }
+
+        #received-message {
+            left: 10px;
+            border: 2px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="message-area">
+        
+    </div>
+
+    <script>
+        const socket = new WebSocket("ws://localhost:10000/");
+        socket.onmessage = (message) => {
+            receiveMessage(message.data);
+        };
+
+        // Message sent from local client
+        function createMessage(inputMessage) {
+            socket.send(inputMessage);
+
+            const message = document.createElement("p");
+            message.textContent = inputMessage;
+            message.id = "my-message";
+
+            const messageArea = document.getElementById("message-area");
+            messageArea.appendChild(message);
+        }
+
+        // message received from an external source
+        function receiveMessage(inputMessage) {
+            const message = document.createElement("p");
+            message.textContent = inputMessage;
+            message.id = "received-message";
+
+            const messageArea = document.getElementById("message-area");
+            messageArea.appendChild(message);
+        }
+
+        // handle character typed into text box
+        function textAreaUpdate() {
+            const messageBox = document.getElementById("textbox-overlay");
+            const messageLength = messageBox.textLength;
+            const message = messageBox.value;
+            if (messageLength === 0) {
+                return;
+            }
+
+            if (message === "\n") {
+                messageBox.value = "";
+                return;
+            }
+
+            if (message[messageLength-1] == '\n') {
+                createMessage(message.trim());
+                messageBox.value = "";
+            }
+        }
+    </script>
+
+    <textarea id="textbox-overlay" autofocus="true" placeholder="Message here" oninput="textAreaUpdate()"></textarea>
+</body>
+
+</html>
