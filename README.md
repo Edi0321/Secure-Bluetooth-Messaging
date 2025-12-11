@@ -19,11 +19,11 @@ Run the following commands to complete setup
 python3 -m pip install -r requirements.txt  
 ```
 
-to run the program on Server Side in order:  
-`python3 crypto.py`
-`python3 Server.py`
+to run the program on Server Side in follow order:  
+1.) `python3 crypto.py`
+2.) `python3 Server.py`
 
 to run the program on Server Side in order:  
-`python3 Client.py`
+1.) `python3 Client.py`
 
 The web-page can be loaded directly by opening index.html in a browser, Then Server side needs to start messaging first
